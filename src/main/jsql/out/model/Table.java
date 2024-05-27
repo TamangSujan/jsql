@@ -1,4 +1,4 @@
-package jsql.out;
+package jsql.out.model;
 
 import java.util.ArrayList;
 import java.util.List;

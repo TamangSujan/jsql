@@ -1,29 +1,35 @@
-package jsql.printer;
+package jsql.out.printer;
 
-import jsql.out.Field;
-import jsql.out.Row;
-import jsql.out.Table;
+import jsql.out.model.Field;
+import jsql.out.model.Row;
+import jsql.out.model.Table;
 import jsql.utils.StringUtils;
 
 import java.util.*;
 
-public class JSQLPrinter {
+class BufferedPrinter {
     private final char horizontalSeparator;
     private final char verticalSeparator;
     private final StringBuilder outputBuffer;
 
-    public JSQLPrinter(char horizontalSeparator, char verticalSeparator){
+    public BufferedPrinter(char horizontalSeparator, char verticalSeparator){
         this.horizontalSeparator = horizontalSeparator;
         this.verticalSeparator = verticalSeparator;
         outputBuffer = new StringBuilder();
     }
 
-    public void print(Table table){
+    public String getPrintBuffer(Table table){
         if(!Objects.isNull(table) && !table.getRows().isEmpty()){
             createTable(table.getRows());
-            System.out.println(outputBuffer);
+            String bufferedResult = outputBuffer.toString();
             clearBuffer();
+            return bufferedResult;
         }
+        return "";
+    }
+
+    public String getJson(Table table){
+        return "";
     }
 
     public void createTable(List<Row> rows){

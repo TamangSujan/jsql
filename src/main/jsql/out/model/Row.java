@@ -1,4 +1,6 @@
-package jsql.out;
+package jsql.out.model;
+
+import jsql.out.model.Field;
 
 import java.util.LinkedList;
 import java.util.List;
