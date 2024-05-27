@@ -2,6 +2,7 @@ import jsql.JSQL;
 import jsql.connection.JSQLConnection;
 import jsql.connection.JSQLConnectionType;
 import jsql.out.model.Table;
+import jsql.out.model.meta.JsonDataType;
 import jsql.out.printer.JSQLPrinter;
 
 import java.sql.SQLException;
@@ -19,6 +20,10 @@ public class JSQLTest {
         connection.setPassword("root");
         try {
             Table table = JSQL.getTable(connection, query);
+            table.setFieldDataType(0, JsonDataType.NUMERIC);
+            table.setFieldDataType(5, JsonDataType.CHARACTER);
+            table.setFieldDataType(2, JsonDataType.NUMERIC);
+
             String printBuffer = JSQLPrinter.getPrintBuffer(table, '-', '|');
             System.out.println(printBuffer);
 
