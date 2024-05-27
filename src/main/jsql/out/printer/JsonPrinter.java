@@ -3,12 +3,15 @@ package jsql.out.printer;
 import jsql.out.model.Field;
 import jsql.out.model.Row;
 import jsql.out.model.Table;
+import jsql.out.model.meta.JsonDataType;
 
 class JsonPrinter {
     private StringBuilder jsonBuffer = new StringBuilder();
 
     public String getJson(Table table){
-        table.getRows().forEach(this::addObjectToJsonBufferFromRow);
+        table.getRows().forEach(row -> {
+            addObjectToJsonBufferFromRow(row, table);
+        });
         removeEndCommaValue();
         wrapWithBigBraces();
         return jsonBuffer.toString();
@@ -28,17 +31,22 @@ class JsonPrinter {
         jsonBuffer.append("\"").append(field.getName()).append("\": ");
     }
 
-    private void addValueInObject(Field field){
-        jsonBuffer.append("\"").append(field.getValue()).append("\",");
+    private void addValueInObject(Field field, JsonDataType jsonDataType){
+        jsonBuffer.append(jsonDataType.getValueWrapper())
+                .append(field.getValue())
+                .append(jsonDataType.getValueWrapper())
+                .append(",");
     }
 
-    private void addObjectToJsonBufferFromRow(Row row){
+    private void addObjectToJsonBufferFromRow(Row row, Table table){
         jsonBuffer.append("{");
         row.getFields().forEach(field ->{
             addKeyInObject(field);
-            addValueInObject(field);
+            addValueInObject(field, table.getFieldDataType(field));
         });
         removeEndCommaValue();
         jsonBuffer.append("},");
     }
+
+
 }
