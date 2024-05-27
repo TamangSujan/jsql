@@ -1,4 +1,4 @@
-package jsql.out;
+package jsql.out.model;
 
 public class Field {
     private String name;

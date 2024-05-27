@@ -2,9 +2,9 @@ package jsql;
 
 import jsql.connection.JSQLConnection;
 import jsql.exception.JSQLException;
-import jsql.out.Field;
-import jsql.out.Row;
-import jsql.out.Table;
+import jsql.out.model.Field;
+import jsql.out.model.Row;
+import jsql.out.model.Table;
 import jsql.validator.FieldValidator;
 import jsql.validator.SelectParser;
 import jsql.validator.SelectValidator;
@@ -30,7 +30,7 @@ public class JSQL {
         ResultSet resultSet = connection.createStatement().executeQuery(query);
         List<Row> rows = new LinkedList<>();
         while(resultSet.next()){
-            Row row = new Row();
+             Row row = new Row();
             for (String fieldName : fieldsName) {
                 row.add(new Field(fieldName, resultSet.getString(fieldName)));
             }
